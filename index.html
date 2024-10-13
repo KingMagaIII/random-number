@@ -6,71 +6,65 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Guess the number</h1>
-    Ho generato dei numeri, prova ad indovinarlo!
-    Hai ancora 5 tentativi
-    <br>
-
-    <form action="" method="get">
-        <input id="guess" type="number" name="userGuess">
-        <input id="button" type="button" name="guess" value="indovina">
+    INDOVINA IL NUMERO MAGICO
+    <form action="">
+        <input type="number" id="userGuess" >
+        <input type="button" id="button" value="submit">
     </form>
+<script>
+    function sanitize(number){
+        let num = number
+        return num.trim()
+    }
 
-    <script>
-        /*1. dichiaro una variabile e con querySelecto memorizzo il button
-        2. dichiaro un EVENT LISTENER sul button*/
+    function random(min,max){
+        let n=0
+        n = Math.random(min,max)
+        n=n*(max-min)  
+        n = parseInt(n)+min
+        console.log(n)
+        return n
+        }
 
+    let tent=0 
+    let tentMax = 5
+    let number
+    let min = 1
+    let max = 100
+    let rnd = 0
+    let indovinato = false
+        
         let button = document.querySelector("#button")
-        button.addEventListener("click", function(event){
-            console.log(event)
-            //questa funzione viene eseguita solo dopo che l'utente clicca sul bottone
-            /*1. Prendo l'elemento html in cui l'utente ha scritto il numero
-            2. trasformo in intero il numero
-            3. controllo i valori
-            4. in console scrivo i risultati*/
-        })
-    </script>
-    <script type="text/javascript">
-        function sanitize(number){
-            number=parseInt(number)
-            return number
-        }
-
-        function generateRandomInteger(min, max) {
-            let casualNumber = Math.random()
-            casualNumber = casualNumber * max
-            casualNumber = parseInt(casualNumber)
-            return casualNumber
-        }
-        console.log("Ciao, benvenuto a CHI VUOL ESSERE MIGLIONARIO, inserisci un numero e prova a vincere 1 milione di euro in soli 5 tentativi")
-        let attempt=1
-        let guessed=false
-        let randomNumber=generateRandomInteger(1,100)
-        console.log(randomNumber)
-        while(attempt<6 && guessed===false){
-            let number = prompt("Inserisci il "+attempt+" tentativo")
-            while(number===null|| isNaN(number)){
-                number = prompt("Errore. Inserisci il "+attempt+" tentativo")
+        rnd = random(min,max)
+         button.addEventListener("click",function(event){
+            if (tent >= tentMax) {
+                console.log("Tentativi esauriti, il numero corretto era "+rnd)
             }
-            number=sanitize(number)
-            console.log(number)
-            if(number===randomNumber){
-                console.log("Complimenti, hai appena vinto 1 milione di euro!")
-                guessed=true
+
+            number = document.querySelector("#userGuess").value
+            number = parseInt(number)
+            tent += 1
+            if (number < min || number > max || isNaN(number)){
+                console.log("Errore inserimento")
+                
             }
-            else{
-                if(number>100){
-                    console.log("Numero troppo grande")
-                }
-                else if(number<1){
-                    console.log("Numero troppo piccolo")
-                }
-            }
-            attempt=attempt+1
+            
+        if(number === rnd){
+        console.log("Hai indovinato!");
+        
+    }
+    else {
+        if(number < rnd){
+            console.log("Numero troppo piccolo, riprova")
         }
+        else{ 
+            if (number > rnd){
+            console.log("Numero troppo grande, riprova")
+        }
+        }
+    }
 
-
-
-    </script>
+})
+</script>
 </body>
 </html>
